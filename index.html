@@ -58,7 +58,7 @@
   </div>
   <div id="again">
     <span>YOU WIN</span>
-    <input type="button" onclick="start();"name="again" value="">
+    <div  onclick="start();"name="again">Play Again</div>
   </div>
   <div id="house_pick" class="picks">
     <span>THE HOUSE PICKED</span>
@@ -85,14 +85,14 @@ var rules;
 }
 
 function openRules(){
-  rules.style.visibility = "visible";//"hidden";
+  rules.style.display='block';//"hidden";
   rules.style.opacity = 1;
 }
 
   function  closeRules(){
        rules = document.getElementById("rules_back");
        rules.style.opacity=0;
-       setTimeout(() => rules.style.visibility = "hidden",300);
+       setTimeout(() => rules.style.display='none',300);
        //"visible";
     }
 
@@ -106,11 +106,11 @@ function openRules(){
           document.getElementById("scope_counter").textContent=scope;
       }
 
-        document.getElementById("result").style.visibility = "hidden";//"visible";
+        document.getElementById("result").style.display='none';//"visible";
 
-        document.getElementById("chooser").style.visibility = "visible";//"hidden";
+        document.getElementById("chooser").style.display='block';//"hidden";
 
-        document.getElementById("again").style.visibility = "hidden";//"visible";
+        document.getElementById("again").style.display='none'//"visible";
 
 
         document.getElementById("you_pick").getElementsByTagName("IMG")[0].classList.remove('winner');
@@ -138,9 +138,9 @@ function openRules(){
 
   function choose_item(pick){
 
-  document.getElementById("result").style.visibility = "visible";//"hidden";
+  document.getElementById("result").style.display='block';//"hidden";
 
-  document.getElementById("chooser").style.visibility = "hidden";//"visible";
+  document.getElementById("chooser").style.display='none';//"visible";
 
   document.getElementById("you_pick").getElementsByTagName("IMG")[0].src="images/icon-"+pick+".svg";
 
@@ -189,19 +189,19 @@ function WinOrLose(player,house){
 var scope = parseInt(  localStorage.getItem("scope_homework_JS"));
 if(checkPicks(player.pick,house)==1){
     document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="YOU WIN";
-    document.getElementById("again").style.visibility = "visible";//"visible";
+    document.getElementById("again").style.display='block';//"visible";
     document.getElementById("scope_counter").textContent=scope+1;
     localStorage.setItem("scope_homework_JS",scope+1);
     document.getElementById("you_pick").getElementsByTagName("IMG")[0].classList.add('winner');
 }else if(checkPicks(player.pick,house)==-1){
     document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="YOU LOSE";
-    document.getElementById("again").style.visibility = "visible";//"visible";
+    document.getElementById("again").style.display='block';//"visible";
     document.getElementById("scope_counter").textContent=scope-1;
     localStorage.setItem("scope_homework_JS",scope-1);
     document.getElementById("house_pick").getElementsByTagName("IMG")[0].classList.add('winner');
 }else {
    document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="DEAD HEAT";
-   document.getElementById("again").style.visibility = "visible";//"visible";
+   document.getElementById("again").style.display='block';//"visible";
 }
 
 }
