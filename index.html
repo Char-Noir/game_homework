@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock, Paper, Scissors</title>
+</head>
+<body>
+  <!--rules page-->
+  <div id="rules_back">
+    <div id="rules_main">
+          <img src="images/image-rules-bonus.svg" alt="bonus rules">
+           <div  class="close" onclick="closeRules()">Закрыть окно</div>
+    </div>
+  </div>
+
+<!--Scope bar-->
+  <div id="scope">
+    <img src="images/logo-bonus.svg" alt="Logo: Rock, Paper, Scissors, Lizard, Spock">
+
+    <div id="scope_bar">
+        <span>SCOPE</span>
+        <span id="scope_counter">0</span>
+    </div>
+  </div>
+
+<!--Chooser for game_item-->
+<div id="chooser" class="container">
+  <div id="chooser_back">
+    <div id="paper" class="game_item">
+      <img src="images/icon-paper.svg" alt="paper">
+    </div>
+    <div id="lizard" class="game_item">
+      <img src="images/icon-lizard.svg" alt="lizard">
+    </div>
+    <div id="rock" class="game_item">
+      <img src="images/icon-rock.svg" alt="rock">
+    </div>
+    <div id="scissors" class="game_item">
+      <img src="images/icon-scissors.svg" alt="scissors">
+    </div>
+    <div id="spock" class="game_item">
+      <img src="images/icon-spock.svg" alt="spock">
+    </div>
+  </div>
+</div>
+
+<!--Result-->
+<div id="result" class="container">
+  <div id="you_pick" class="picks">
+    <span>YOU PICKED</span>
+    <img src="images/icon-paper.svg" alt="You pick">
+  </div>
+  <div id="again">
+    <span>YOU WIN</span>
+    <input type="button" onclick="start();"name="again" value="">
+  </div>
+  <div id="house_pick" class="picks">
+    <span>THE HOUSE PICKED</span>
+    <img src="images/icon-paper.svg" alt="The House pick">
+  </div>
+</div>
+
+
+<div class="button" onclick="openRules();">
+  Rules
+</div>
+  <script type="text/javascript">
+
+var rules;
+
+  start();
+
+  var pick = document.getElementsByClassName('game_item');
+
+  for (let entry of pick) {
+      entry.addEventListener('click', startGame);
+}
+
+function openRules(){
+  document.body.prepend(rules);
+}
+
+  function  closeRules(){
+       rules = document.getElementById("rules_back");
+       rules.remove();
+    }
+
+  function start(){
+    var scope =(localStorage.getItem("scope_homework_JS"));
+
+      if(scope==null){
+        document.getElementById("scope_counter").textContent=0;
+        localStorage.setItem("scope_homework_JS",0);
+      }else{
+          document.getElementById("scope_counter").textContent=scope;
+      }
+
+        document.getElementById("result").style.visibility = "hidden";//"visible";
+
+        document.getElementById("chooser").style.visibility = "visible";//"hidden";
+
+        document.getElementById("again").style.visibility = "hidden";//"visible";
+
+
+        document.getElementById("you_pick").getElementsByTagName("IMG")[0].classList.remove('winner');
+
+        document.getElementById("house_pick").getElementsByTagName("IMG")[0].classList.remove('winner');
+
+  }
+
+  function startGame(pick){
+    var player = {
+      'pick' : this.id,
+      'scope' : 0
+    }
+    var house;
+      choose_item(this.id);
+
+      choose_house().then(function(done) {
+    house = done;
+    setTimeout(WinOrLose,1000,player,house);
+      });
+
+
+
+  }
+
+  function choose_item(pick){
+
+  document.getElementById("result").style.visibility = "visible";//"hidden";
+
+  document.getElementById("chooser").style.visibility = "hidden";//"visible";
+
+  document.getElementById("you_pick").getElementsByTagName("IMG")[0].src="images/icon-"+pick+".svg";
+
+}
+
+function choose_house(player){
+
+  var pick = getRandomPick();
+
+document.getElementById("house_pick").getElementsByTagName("IMG")[0].src="images/icon-"+pick+".svg";
+
+var promise = new Promise(function(resolve, reject) {
+  window.setTimeout(function() {
+    resolve(pick);
+  });
+});
+return promise;
+
+}
+
+function getRandomPick(){
+  switch ( Math.floor((Math.random() * Math.floor(5))+1)) {
+    case 1:
+      return "lizard";
+      break;
+    case 2:
+      return "paper";
+      break;
+    case 3:
+      return "rock";
+      break;
+    case 4:
+      return "scissors";
+      break;
+    case 5:
+      return "spock";
+      break;
+    default:
+      return "paper";
+      break;
+  }
+
+}
+
+function WinOrLose(player,house){
+var scope = parseInt(  localStorage.getItem("scope_homework_JS"));
+if(checkPicks(player.pick,house)==1){
+    document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="YOU WIN";
+    document.getElementById("again").style.visibility = "visible";//"visible";
+    document.getElementById("scope_counter").textContent=scope+1;
+    localStorage.setItem("scope_homework_JS",scope+1);
+    document.getElementById("you_pick").getElementsByTagName("IMG")[0].classList.add('winner');
+}else if(checkPicks(player.pick,house)==-1){
+    document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="YOU LOSE";
+    document.getElementById("again").style.visibility = "visible";//"visible";
+    document.getElementById("scope_counter").textContent=scope-1;
+    localStorage.setItem("scope_homework_JS",scope-1);
+    document.getElementById("house_pick").getElementsByTagName("IMG")[0].classList.add('winner');
+}else {
+   document.getElementById("again").getElementsByTagName("SPAN")[0].textContent="DEAD HEAT";
+   document.getElementById("again").style.visibility = "visible";//"visible";
+}
+
+}
+
+function checkPicks(pick,house){
+console.log(pick);
+console.log(house);
+if(pick==house){
+  return 0;
+}
+else if((pick=='scissors' && house=='paper')||
+        (pick=='paper' && house=='rock')||
+        (pick=='rock' && house=='lizard')||
+        (pick=='lizard' && house=='spock')||
+        (pick=='spock' && house=='scissors')||
+        (pick=='scissors' && house=='lizard')||
+        (pick=='paper' && house=='spock')||
+        (pick=='rock' && house=='scissors')||
+        (pick=='lizard' && house=='paper')||
+        (pick=='spock' && house=='rock')){
+          return 1;
+}else{
+  return -1;
+}
+
+}
+  </script>
+
+</body>
+</html>
