@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css">
   <title>Rock, Paper, Scissors</title>
 </head>
 <body>
   <!--rules page-->
   <div id="rules_back">
     <div id="rules_main">
-          <img src="images/image-rules-bonus.svg" alt="bonus rules">
-           <div  class="close" onclick="closeRules()">Закрыть окно</div>
+      <div class="rules">
+          <span>RULES</span>
+          <div  class="close" onclick="closeRules()"> <img src="images/icon-close.svg" alt="Close"> </div>
+      </div>
+      <img src="images/image-rules-bonus.svg" alt="bonus rules">
     </div>
   </div>
 
@@ -61,10 +65,12 @@
   </div>
 </div>
 
-
-<div class="button" onclick="openRules();">
-  Rules
+<div class="button_div">
+  <span class="button" onclick="openRules();">
+    Rules
+  </span>
 </div>
+
   <script type="text/javascript">
 
 var rules;
@@ -78,12 +84,15 @@ var rules;
 }
 
 function openRules(){
-  document.body.prepend(rules);
+  rules.style.visibility = "visible";//"hidden";
+  rules.style.opacity = 1;
 }
 
   function  closeRules(){
        rules = document.getElementById("rules_back");
-       rules.remove();
+       rules.style.opacity=0;
+       setTimeout(() => rules.style.visibility = "hidden",300);
+       //"visible";
     }
 
   function start(){

@@ -1,0 +1,30 @@
+#rules_main{
+       width: 380px;
+       height:400px;
+       padding: 20px;
+       border-radius: 10px;
+       font-size: 30px;
+       .rules{
+         margin: 0 15px;
+       }
+}
+.button{
+  padding: 8px 40px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+#scope{
+  width: 800px;
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 35px;
+}
+#scope_counter{
+  font-weight: 700;
+  font-size: 64px;
+}
+#scope_bar{
+  padding:10px 40px;
+  border-radius: 15px;
+}
